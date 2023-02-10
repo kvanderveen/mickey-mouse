@@ -37,8 +37,8 @@ function drawEars() {
   const earSize = [screenWidth * 0.14, screenWidth * 0.135]
   noStroke()
   fill(color(...BLACK))
-  drawLeftEar(earSize)
-  drawRightEar(earSize)
+  drawEar(earSize, 'left')
+  drawEar(earSize, 'right')
 }
 
 function drawEyes() {
@@ -46,11 +46,11 @@ function drawEyes() {
   const pupilSize = [screenWidth * 0.018, screenWidth * 0.03]
   noStroke()
   fill(color(...WHITE))
-  drawLeftSclera(eyeSize)
-  drawRightSclera(eyeSize)
+  drawSclera(eyeSize, 'left')
+  drawSclera(eyeSize, 'right')
   fill(color(...BLACK))
-  drawLeftPupil(pupilSize)
-  drawRightPupil(pupilSize)
+  drawPupil(pupilSize, 'left')
+  drawPupil(pupilSize, 'right')
 }
 
 function drawFace() {
@@ -61,49 +61,45 @@ function drawFace() {
   fill(color(...BLACK))
   drawFaceBackground(faceSize)
   fill(color(...PEACH))
-  drawLeftPeriorbitalRegion(periorbitalSize)
-  drawRightPeriorbitalRegion(periorbitalSize)
+  drawPeriorbitalRegion(periorbitalSize, 'left')
+  drawPeriorbitalRegion(periorbitalSize, 'right')
   drawPerioralRegion(perioralSize)
 }
 
-function drawLeftEar(earSize) {
-  ellipse(centerFaceX - screenWidth * 0.12, centerY - screenWidth * 0.15, ...earSize)
-}
-
-function drawRightEar(earSize) {
-  ellipse(centerFaceX + screenWidth * 0.12, centerY - screenWidth * 0.15, ...earSize)
+function drawEar(earSize, side) {
+  const multiplier = side === 'left' ? -1 : 1
+  ellipse(centerFaceX + multiplier * screenWidth * 0.12, centerY - screenWidth * 0.15, ...earSize)
 }
 
 function drawFaceBackground(faceSize) {
   ellipse(centerFaceX, centerY, ...faceSize)
 }
 
-function drawLeftPeriorbitalRegion(periorbitalSize) {
-  ellipse(centerFaceX - screenWidth * 0.035, centerY - screenWidth * 0.01, ...periorbitalSize)
-}
-
-function drawRightPeriorbitalRegion(periorbitalSize) {
-  ellipse(centerFaceX + screenWidth * 0.035, centerY - screenWidth * 0.01, ...periorbitalSize)
+function drawPeriorbitalRegion(periorbitalSize, side) {
+  const multiplier = side === 'left' ? -1 : 1
+  ellipse(
+    centerFaceX + multiplier * screenWidth * 0.035,
+    centerY - screenWidth * 0.01,
+    ...periorbitalSize
+  )
 }
 
 function drawPerioralRegion(perioralSize) {
   ellipse(centerFaceX, centerY + screenWidth * 0.08, ...perioralSize)
 }
 
-function drawLeftSclera(eyeSize) {
-  ellipse(centerFaceX - screenWidth * 0.016, centerY - screenWidth * 0.01, ...eyeSize)
+function drawSclera(eyeSize, side) {
+  const multiplier = side === 'left' ? -1 : 1
+  ellipse(centerFaceX + multiplier * screenWidth * 0.016, centerY - screenWidth * 0.01, ...eyeSize)
 }
 
-function drawRightSclera(eyeSize) {
-  ellipse(centerFaceX + screenWidth * 0.016, centerY - screenWidth * 0.01, ...eyeSize)
-}
-
-function drawLeftPupil(pupilSize) {
-  ellipse(centerFaceX - screenWidth * 0.014, centerY + screenWidth * 0.005, ...pupilSize)
-}
-
-function drawRightPupil(pupilSize) {
-  ellipse(centerFaceX + screenWidth * 0.014, centerY + screenWidth * 0.005, ...pupilSize)
+function drawPupil(pupilSize, side) {
+  const multiplier = side === 'left' ? -1 : 1
+  ellipse(
+    centerFaceX + multiplier * screenWidth * 0.014,
+    centerY + screenWidth * 0.005,
+    ...pupilSize
+  )
 }
 
 function drawNose() {
@@ -117,33 +113,23 @@ function drawMouth() {
   stroke(color(...BLACK))
   strokeWeight(screenWidth * 0.003)
   drawSmile()
-  drawLeftDimple()
-  drawRightDimple()
+  drawDimple('left')
+  drawDimple('right')
 }
 
 function drawSmile() {
   arc(centerFaceX, centerY + screenWidth * 0.07, screenWidth * 0.12, screenWidth * 0.08, 10, 170)
 }
 
-function drawLeftDimple() {
+function drawDimple(side) {
+  const multiplier = side === 'left' ? -1 : 1
   arc(
-    centerFaceX - screenWidth * 0.07,
+    centerFaceX + multiplier * screenWidth * 0.07,
     centerY + screenWidth * 0.06,
     screenWidth * 0.04,
     screenWidth * 0.05,
-    20,
-    90
-  )
-}
-
-function drawRightDimple() {
-  arc(
-    centerFaceX + screenWidth * 0.07,
-    centerY + screenWidth * 0.06,
-    screenWidth * 0.04,
-    screenWidth * 0.05,
-    90,
-    160
+    side === 'left' ? 20 : 90,
+    side === 'left' ? 90 : 160
   )
 }
 
@@ -174,5 +160,5 @@ function drawThreeDots() {
 function drawText() {
   textAlign(CENTER, CENTER)
   textSize(screenWidth * 0.045)
-  text('I love coding!', centerSpeechBubbleX, centerY - screenWidth * 0.12)
+  text('I ❤️ coding!', centerSpeechBubbleX, centerY - screenWidth * 0.12)
 }
