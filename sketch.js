@@ -1,17 +1,8 @@
-const SCREEN_WIDTH = window.innerWidth
-const SCREEN_HEIGHT = window.innerHeight
-const SCREEN_CENTER = [SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2]
-const [CENTER_X, CENTER_Y] = SCREEN_CENTER
-const CENTER_FACE_X = CENTER_X - SCREEN_WIDTH * 0.2
-const CENTER_SPEECH_BUBBLE_X = CENTER_X + SCREEN_WIDTH * 0.15
-
-const EAR_SIZE = [SCREEN_WIDTH * 0.14, SCREEN_WIDTH * 0.135]
-const EYE_SIZE = [SCREEN_WIDTH * 0.026, SCREEN_WIDTH * 0.08]
-const PUPIL_SIZE = [SCREEN_WIDTH * 0.018, SCREEN_WIDTH * 0.03]
-const NOSE_SIZE = [SCREEN_WIDTH * 0.05, SCREEN_WIDTH * 0.035]
-const FACE_SIZE = [SCREEN_WIDTH * 0.28, SCREEN_WIDTH * 0.3]
-const PERIORBITAL_SIZE = [SCREEN_WIDTH * 0.11, SCREEN_WIDTH * 0.2]
-const PERIORAL_SIZE = [SCREEN_WIDTH * 0.2, SCREEN_WIDTH * 0.1]
+let screenWidth = window.innerWidth
+let screenHeight = window.innerHeight
+let [centerX, centerY] = [screenWidth / 2, screenHeight / 2]
+let centerFaceX = centerX - screenWidth * 0.2
+let centerSpeechBubbleX = centerX + screenWidth * 0.15
 
 const BLACK = [0, 0, 0]
 const ORANGE = [245, 108, 66]
@@ -19,7 +10,7 @@ const PEACH = [247, 223, 194]
 const WHITE = [255, 255, 255]
 
 function setup() {
-  createCanvas(SCREEN_WIDTH, SCREEN_HEIGHT)
+  createCanvas(screenWidth, screenHeight)
   angleMode(DEGREES)
 }
 
@@ -33,104 +24,113 @@ function draw() {
   drawSpeechBubble()
 }
 
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight)
+  screenWidth = window.innerWidth
+  screenHeight = window.innerHeight
+  ;[centerX, centerY] = [screenWidth / 2, screenHeight / 2]
+  centerFaceX = centerX - screenWidth * 0.2
+  centerSpeechBubbleX = centerX + screenWidth * 0.15
+}
+
 function drawEars() {
+  const earSize = [screenWidth * 0.14, screenWidth * 0.135]
   noStroke()
   fill(color(...BLACK))
-  drawLeftEar()
-  drawRightEar()
+  drawLeftEar(earSize)
+  drawRightEar(earSize)
 }
 
 function drawEyes() {
+  const eyeSize = [screenWidth * 0.026, screenWidth * 0.08]
+  const pupilSize = [screenWidth * 0.018, screenWidth * 0.03]
   noStroke()
   fill(color(...WHITE))
-  drawLeftSclera()
-  drawRightSclera()
+  drawLeftSclera(eyeSize)
+  drawRightSclera(eyeSize)
   fill(color(...BLACK))
-  drawLeftPupil()
-  drawRightPupil()
+  drawLeftPupil(pupilSize)
+  drawRightPupil(pupilSize)
 }
 
 function drawFace() {
+  const faceSize = [screenWidth * 0.28, screenWidth * 0.3]
+  const periorbitalSize = [screenWidth * 0.11, screenWidth * 0.2]
+  const perioralSize = [screenWidth * 0.2, screenWidth * 0.1]
   noStroke()
   fill(color(...BLACK))
-  drawFaceBackground()
+  drawFaceBackground(faceSize)
   fill(color(...PEACH))
-  drawLeftPeriorbitalRegion()
-  drawRightPeriorbitalRegion()
-  drawPerioralRegion()
+  drawLeftPeriorbitalRegion(periorbitalSize)
+  drawRightPeriorbitalRegion(periorbitalSize)
+  drawPerioralRegion(perioralSize)
 }
 
-function drawLeftEar() {
-  ellipse(CENTER_FACE_X - SCREEN_WIDTH * 0.12, CENTER_Y - SCREEN_WIDTH * 0.15, ...EAR_SIZE)
+function drawLeftEar(earSize) {
+  ellipse(centerFaceX - screenWidth * 0.12, centerY - screenWidth * 0.15, ...earSize)
 }
 
-function drawRightEar() {
-  ellipse(CENTER_FACE_X + SCREEN_WIDTH * 0.12, CENTER_Y - SCREEN_WIDTH * 0.15, ...EAR_SIZE)
+function drawRightEar(earSize) {
+  ellipse(centerFaceX + screenWidth * 0.12, centerY - screenWidth * 0.15, ...earSize)
 }
 
-function drawFaceBackground() {
-  ellipse(CENTER_FACE_X, CENTER_Y, ...FACE_SIZE)
+function drawFaceBackground(faceSize) {
+  ellipse(centerFaceX, centerY, ...faceSize)
 }
 
-function drawLeftPeriorbitalRegion() {
-  ellipse(CENTER_FACE_X - SCREEN_WIDTH * 0.035, CENTER_Y - SCREEN_WIDTH * 0.01, ...PERIORBITAL_SIZE)
+function drawLeftPeriorbitalRegion(periorbitalSize) {
+  ellipse(centerFaceX - screenWidth * 0.035, centerY - screenWidth * 0.01, ...periorbitalSize)
 }
 
-function drawRightPeriorbitalRegion() {
-  ellipse(CENTER_FACE_X + SCREEN_WIDTH * 0.035, CENTER_Y - SCREEN_WIDTH * 0.01, ...PERIORBITAL_SIZE)
+function drawRightPeriorbitalRegion(periorbitalSize) {
+  ellipse(centerFaceX + screenWidth * 0.035, centerY - screenWidth * 0.01, ...periorbitalSize)
 }
 
-function drawPerioralRegion() {
-  ellipse(CENTER_FACE_X, CENTER_Y + SCREEN_WIDTH * 0.08, ...PERIORAL_SIZE)
+function drawPerioralRegion(perioralSize) {
+  ellipse(centerFaceX, centerY + screenWidth * 0.08, ...perioralSize)
 }
 
-function drawLeftSclera() {
-  ellipse(CENTER_FACE_X - SCREEN_WIDTH * 0.016, CENTER_Y - SCREEN_WIDTH * 0.01, ...EYE_SIZE)
+function drawLeftSclera(eyeSize) {
+  ellipse(centerFaceX - screenWidth * 0.016, centerY - screenWidth * 0.01, ...eyeSize)
 }
 
-function drawRightSclera() {
-  ellipse(CENTER_FACE_X + SCREEN_WIDTH * 0.016, CENTER_Y - SCREEN_WIDTH * 0.01, ...EYE_SIZE)
+function drawRightSclera(eyeSize) {
+  ellipse(centerFaceX + screenWidth * 0.016, centerY - screenWidth * 0.01, ...eyeSize)
 }
 
-function drawLeftPupil() {
-  ellipse(CENTER_FACE_X - SCREEN_WIDTH * 0.014, CENTER_Y + SCREEN_WIDTH * 0.005, ...PUPIL_SIZE)
+function drawLeftPupil(pupilSize) {
+  ellipse(centerFaceX - screenWidth * 0.014, centerY + screenWidth * 0.005, ...pupilSize)
 }
 
-function drawRightPupil() {
-  ellipse(CENTER_FACE_X + SCREEN_WIDTH * 0.014, CENTER_Y + SCREEN_WIDTH * 0.005, ...PUPIL_SIZE)
+function drawRightPupil(pupilSize) {
+  ellipse(centerFaceX + screenWidth * 0.014, centerY + screenWidth * 0.005, ...pupilSize)
 }
 
 function drawNose() {
+  const noseSize = [screenWidth * 0.05, screenWidth * 0.035]
   fill(color(...BLACK))
-  ellipse(CENTER_FACE_X, CENTER_Y + SCREEN_WIDTH * 0.06, ...NOSE_SIZE)
+  ellipse(centerFaceX, centerY + screenWidth * 0.06, ...noseSize)
 }
 
 function drawMouth() {
   noFill()
   stroke(color(...BLACK))
-  strokeWeight(SCREEN_WIDTH * 0.003)
+  strokeWeight(screenWidth * 0.003)
   drawSmile()
   drawLeftDimple()
   drawRightDimple()
 }
 
 function drawSmile() {
-  arc(
-    CENTER_FACE_X,
-    CENTER_Y + SCREEN_WIDTH * 0.07,
-    SCREEN_WIDTH * 0.12,
-    SCREEN_WIDTH * 0.08,
-    10,
-    170
-  )
+  arc(centerFaceX, centerY + screenWidth * 0.07, screenWidth * 0.12, screenWidth * 0.08, 10, 170)
 }
 
 function drawLeftDimple() {
   arc(
-    CENTER_FACE_X - SCREEN_WIDTH * 0.07,
-    CENTER_Y + SCREEN_WIDTH * 0.06,
-    SCREEN_WIDTH * 0.04,
-    SCREEN_WIDTH * 0.05,
+    centerFaceX - screenWidth * 0.07,
+    centerY + screenWidth * 0.06,
+    screenWidth * 0.04,
+    screenWidth * 0.05,
     20,
     90
   )
@@ -138,10 +138,10 @@ function drawLeftDimple() {
 
 function drawRightDimple() {
   arc(
-    CENTER_FACE_X + SCREEN_WIDTH * 0.07,
-    CENTER_Y + SCREEN_WIDTH * 0.06,
-    SCREEN_WIDTH * 0.04,
-    SCREEN_WIDTH * 0.05,
+    centerFaceX + screenWidth * 0.07,
+    centerY + screenWidth * 0.06,
+    screenWidth * 0.04,
+    screenWidth * 0.05,
     90,
     160
   )
@@ -157,12 +157,7 @@ function drawSpeechBubble() {
 }
 
 function drawTextBubble() {
-  ellipse(
-    CENTER_SPEECH_BUBBLE_X,
-    CENTER_Y - SCREEN_WIDTH * 0.12,
-    SCREEN_WIDTH * 0.3,
-    SCREEN_WIDTH * 0.2
-  )
+  ellipse(centerSpeechBubbleX, centerY - screenWidth * 0.12, screenWidth * 0.3, screenWidth * 0.2)
 }
 
 function drawThreeDots() {
@@ -172,16 +167,12 @@ function drawThreeDots() {
     [0.18, 0.08, 0.015],
   ]
   adjustments.forEach(([a1, a2, a3]) => {
-    ellipse(
-      CENTER_SPEECH_BUBBLE_X - SCREEN_WIDTH * a1,
-      CENTER_Y + SCREEN_WIDTH * a2,
-      SCREEN_WIDTH * a3
-    )
+    ellipse(centerSpeechBubbleX - screenWidth * a1, centerY + screenWidth * a2, screenWidth * a3)
   })
 }
 
 function drawText() {
   textAlign(CENTER, CENTER)
-  textSize(SCREEN_WIDTH * 0.045)
-  text('I love coding!', CENTER_SPEECH_BUBBLE_X, CENTER_Y - SCREEN_WIDTH * 0.12)
+  textSize(screenWidth * 0.045)
+  text('I love coding!', centerSpeechBubbleX, centerY - screenWidth * 0.12)
 }
